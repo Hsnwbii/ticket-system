@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # ۱. سرویس دیتابیس (Postgres)
+  db:
+    image: postgres:15  # از چه ایمیجی استفاده کنیم
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # برای ذخیره دائمی اطلاعات دیتابیس
+    environment:
+      # این‌ها تنظیمات دیتابیس ما هستن که بعداً جنگو ازشون استفاده می‌کنه
+      - POSTGRES_DB=concertdb
+      - POSTGRES_USER=userconcert
+      - POSTGRES_PASSWORD=12345 # این پسورد همون پسوردیه که توی settings.py گذاشتی
+
+  # ۲. سرویس سایت جنگو (web)
+  web:
+    build: .  # یعنی ایمیج رو بر اساس همین فولدر (Dockerfile) بساز
+    command: python manage.py runserver 0.0.0.0:8000 # دستوری که موقع اجرا میره
+    volumes:
+      - .:/app # فایل‌های کد ما رو به کانتینر وصل کن (برای تغییرات لحظه‌ای)
+    ports:
+      - "8000:8000" # پورت ۸۰۰۰ کامپیوتر ما رو به پورت ۸۰۰۰ کانتینر وصل کن
+    depends_on:
+      - db # یعنی اول سرویس db (دیتابیس) راه بیفته، بعد این
+    environment:
+      # این‌ها متغیرهای محیطی هستن که به جنگو میدیم
+      - DB_NAME=concertdb
+      - DB_USER=userconcert
+      - DB_PASSWORD=12345
+      - DB_HOST=db  # آدرس دیتابیس در شبکه داکر (اسم سرویس db)
+      - SECRET_KEY=your_django_secret_key_here # یه سکرت کی موقت
+      - DEBUG=True # برای دولوپ فعلا
+
+volumes:
+  postgres_data: # فضایی که اطلاعات دیتابیس ذخیره میشه

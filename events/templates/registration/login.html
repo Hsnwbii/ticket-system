@@ -1,0 +1,61 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-lg border-0 rounded-4">
+            <!-- سربرگ کارت -->
+            <div class="card-header bg-primary text-white text-center py-4" 
+                 style="background: linear-gradient(45deg, #2575fc, #6a11cb) !important;">
+                <h3 class="fw-bold mb-0"><i class="fas fa-user-lock ms-2"></i> ورود به حساب</h3>
+            </div>
+
+            <div class="card-body p-4">
+                <!-- فرم ورود -->
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                        <div class="alert alert-danger small">
+                            نام کاربری یا رمز عبور اشتباه است.
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-secondary">نام کاربری</label>
+                        <input type="text" name="username" class="form-control form-control-lg" placeholder="نام کاربری خود را وارد کنید" required autofocus>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-secondary">رمز عبور</label>
+                        <input type="password" name="password" class="form-control form-control-lg" placeholder="رمز عبور" required>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm"
+                                style="background: linear-gradient(45deg, #2575fc, #6a11cb); border: none;">
+                            ورود به سایت
+                        </button>
+                    </div>
+                </form>
+
+                <!-- خط جداکننده -->
+                <div class="text-center my-4 position-relative">
+                    <hr class="text-muted">
+                    <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small">
+                        یا
+                    </span>
+                </div>
+
+                <!-- بخش ثبت‌نام (برای کسانی که اکانت ندارند) -->
+                <div class="text-center">
+                    <p class="text-muted mb-2">هنوز حساب کاربری ندارید؟</p>
+                    <a href="{% url 'signup' %}" class="btn btn-outline-success w-100 rounded-pill fw-bold">
+                        <i class="fas fa-user-plus ms-1"></i> ثبت‌نام کنید
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

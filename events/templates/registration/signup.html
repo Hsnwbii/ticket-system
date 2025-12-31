@@ -1,0 +1,48 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-lg border-0 rounded-lg mt-5">
+            <div class="card-header bg-primary text-white text-center py-3">
+                <h3 class="font-weight-light my-1 fw-bold">ثبت‌نام کاربر جدید</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- نمایش فرم به صورت استاندارد -->
+                    <div class="mb-3">
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-secondary">{{ field.label }}</label>
+                   
+		              <input type="{{ field.field.widget.input_type }}" 
+                                   name="{{ field.name }}" 
+                                   class="form-control"
+                                   {% if field.help_text %}placeholder="{{ field.help_text }}"{% endif %}>
+                            {% if field.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ field.errors.0 }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">
+                            ثبت‌نام در سایت
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center py-3">
+                <div class="small">
+                    <a href="/accounts/login/" class="text-decoration-none">قبلاً ثبت‌نام کرده‌اید؟ ورود</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

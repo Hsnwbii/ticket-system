@@ -1,0 +1,8 @@
+# Django
+venv/
+__pycache__/
+*.pyc
+db.sqlite3
+.env
+postgres_data/
+.DS_Store

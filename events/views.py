@@ -3,7 +3,7 @@ from django.views.generic import ListView, DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm  # <--- این مهمه
+from django.contrib.auth.forms import UserCreationForm  
 from .models import Event, Ticket
 
 # ۱. نمایش لیست رویدادها
